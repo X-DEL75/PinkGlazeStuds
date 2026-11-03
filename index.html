@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PinkGlaze | Luxury Makeup & Photography Studio — Lagos</title>
+  <meta name="description" content="PinkGlaze — Professional makeup, bridal glam, photography, hair installation & microblading in Abule Egba, Lagos. Studio-based excellence." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+</head>
+<body>
+  <!-- Loading screen -->
+  <div id="loader">
+    <div class="loader-logo">
+      <svg viewBox="0 0 100 100" class="logo-svg">
+        <circle cx="50" cy="50" r="46" fill="none" stroke="#e8a0b8" stroke-width="1.5"/>
+        <path d="M35 55 Q50 25 65 55" fill="none" stroke="#f2c4d3" stroke-width="2"/>
+        <circle cx="50" cy="48" r="6" fill="#e8a0b8"/>
+        <text x="50" y="78" text-anchor="middle" fill="#f2c4d3" font-size="9" font-family="Cormorant Garamond">PG</text>
+      </svg>
+      <p>PINKGLAZE</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#home" class="brand" aria-label="PinkGlaze Home">
+        <svg viewBox="0 0 40 40" class="brand-logo">
+          <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path d="M14 22 Q20 10 26 22" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="20" cy="19" r="2.5" fill="currentColor"/>
+        </svg>
+        <span>PinkGlaze</span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Full-screen Navigation Overlay -->
+  <nav class="nav-overlay" id="navOverlay" aria-hidden="true">
+    <div class="nav-content">
+      <ul class="nav-links">
+        <li><a href="#home" data-nav>Home</a></li>
+        <li><a href="#about" data-nav>About</a></li>
+        <li><a href="#services" data-nav>Services</a></li>
+        <li><a href="#portfolio" data-nav>Portfolio</a></li>
+        <li><a href="#faq" data-nav>FAQ</a></li>
+        <li><a href="#contact" data-nav>Contact</a></li>
+      </ul>
+      <div class="nav-footer">
+        <p>Studio · Abule Egba, Lagos</p>
+        <a href="https://wa.me/234" class="nav-wa" target="_blank" rel="noopener">WhatsApp Booking</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HOME -->
+    <section id="home" class="section hero">
+      <div class="hero-content">
+        <p class="eyebrow">Lagos · Studio Excellence</p>
+        <h1>Where beauty meets<br><em>precision</em></h1>
+        <p class="hero-lead">
+          PinkGlaze is a professional makeup, photography and hair studio based in Abule Egba, Lagos. 
+          We specialise in bridal, Owambe, casual glam, photoshoot makeup, hair installation and microblading — 
+          all delivered with refined artistry and care.
+        </p>
+        <div class="hero-cta">
+          <a href="#services" class="btn btn-primary">View Services</a>
+          <a href="#portfolio" class="btn btn-outline">See Our Work</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-frame"></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">The Brand</p>
+          <h2>PinkGlaze</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              PinkGlaze was built on a simple belief: every client deserves to feel polished, confident and camera-ready. 
+              From soft everyday glam to full bridal transformation and professional photoshoot looks, we approach every face with precision and luxury.
+            </p>
+            <p>
+              Our studio is located at <strong>6, Abraham Afolabi Street, off General, Abule Egba, Lagos</strong>. 
+              We work strictly within Lagos — no out-of-state travel — so we can give every appointment the focused attention it deserves.
+            </p>
+            <p>
+              Services include professional makeup (Owambe, casual, bridal, photoshoot), hair installation, microblading, and studio photography.
+            </p>
+          </div>
+          <div class="about-stats">
+            <div class="stat">
+              <span class="stat-num">Studio</span>
+              <span class="stat-label">Based</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">Lagos</span>
+              <span class="stat-label">Only</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">Full</span>
+              <span class="stat-label">Glam Range</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section services">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">What We Offer</p>
+          <h2>Services &amp; Pricing</h2>
+          <p class="section-desc">Transparent pricing. All services performed at our Abule Egba studio unless otherwise arranged within Lagos.</p>
+        </div>
+        <div class="services-grid">
+          <article class="service-card">
+            <h3>Owambe Makeup</h3>
+            <p class="price">₦15,000</p>
+            <p>Full glam for parties, aso-ebi events and celebrations. Long-lasting and camera-ready.</p>
+          </article>
+          <article class="service-card">
+            <h3>Casual Makeup</h3>
+            <p class="price">₦10,000</p>
+            <p>Soft, everyday polish — perfect for meetings, dates or a refined natural look.</p>
+          </article>
+          <article class="service-card">
+            <h3>Photoshoot Makeup</h3>
+            <p class="price">₦25,000</p>
+            <p>Studio and outdoor shoot glam tailored for photography lighting and longevity.</p>
+          </article>
+          <article class="service-card featured">
+            <h3>Bridal Makeup</h3>
+            <p class="price">₦50,000 <small>(within Lagos)</small></p>
+            <p>Complete bridal transformation. Flawless base, refined detail, all-day hold.</p>
+          </article>
+          <article class="service-card">
+            <h3>Hair Installation</h3>
+            <p class="price">₦15,000</p>
+            <p>Professional installation for a seamless, natural finish that complements your glam.</p>
+          </article>
+          <article class="service-card">
+            <h3>Microblading</h3>
+            <p class="price">₦25,000</p>
+            <p>Precision brow artistry for natural-looking, defined brows that frame the face.</p>
+          </article>
+        </div>
+        <p class="note">Prices are starting rates and may vary slightly based on specific requirements. Contact us for packages or custom requests.</p>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO / FEED -->
+    <section id="portfolio" class="section portfolio">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Our Work</p>
+          <h2>Portfolio</h2>
+          <p class="section-desc">Real work from the studio. Filter by recency to explore recent transformations.</p>
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="newest">Newest</button>
+          <button class="filter-btn" data-filter="oldest">Oldest</button>
+          <button class="filter-btn" data-filter="all">All</button>
+        </div>
+
+        <div id="portfolioGrid" class="portfolio-grid">
+          <!-- Posts loaded dynamically from Supabase. Empty until admin uploads. -->
+          <div class="empty-state" id="emptyState">
+            <svg viewBox="0 0 64 64" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="8" y="12" width="48" height="40" rx="2"/>
+              <circle cx="24" cy="28" r="6"/>
+              <path d="M8 44 L24 32 L36 40 L56 24"/>
+            </svg>
+            <p>No posts yet.</p>
+            <p class="small">New work will appear here once published.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section faq">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Questions</p>
+          <h2>Frequently Asked</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Where is PinkGlaze based?</summary>
+            <p>We are studio-based at 6, Abraham Afolabi Street, off General, Abule Egba, Lagos, Nigeria.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do you travel outside Lagos?</summary>
+            <p>No. We currently do not take bookings outside Lagos. All services are within Lagos only so we can maintain quality and punctuality.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What services do you offer?</summary>
+            <p>Professional makeup (Owambe, casual, bridal, photoshoot), hair installation, microblading, and studio photography.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do I book an appointment?</summary>
+            <p>Reach out via WhatsApp or the contact form. We recommend booking in advance, especially for bridal and photoshoot dates.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Is the bridal price inclusive?</summary>
+            <p>The ₦50,000 bridal rate is for services within Lagos. Additional travel or overnight arrangements are not included as we stay Lagos-based.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Do you offer home service?</summary>
+            <p>We primarily work from the studio for best lighting and equipment control. Limited in-Lagos home service may be discussed on a case-by-case basis.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Get In Touch</p>
+          <h2>Book or Enquire</h2>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="info-block">
+              <h4>Studio Address</h4>
+              <p>6, Abraham Afolabi Street<br>off General, Abule Egba<br>Lagos, Nigeria</p>
+            </div>
+            <div class="info-block">
+              <h4>Service Area</h4>
+              <p>Lagos only · Studio preferred</p>
+            </div>
+            <div class="info-block">
+              <h4>Quick Contact</h4>
+              <a href="https://wa.me/234" class="btn btn-primary" target="_blank" rel="noopener">WhatsApp Us</a>
+              <p class="small" style="margin-top:1rem">Replace the WhatsApp number with the real one when ready.</p>
+            </div>
+          </div>
+          <form class="contact-form" id="contactForm">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required placeholder="Your full name" />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone / WhatsApp</label>
+              <input type="tel" id="phone" name="phone" required placeholder="e.g. 0803..." />
+            </div>
+            <div class="form-group">
+              <label for="service">Service Interest</label>
+              <select id="service" name="service">
+                <option value="">Select a service</option>
+                <option>Owambe Makeup</option>
+                <option>Casual Makeup</option>
+                <option>Photoshoot Makeup</option>
+                <option>Bridal Makeup</option>
+                <option>Hair Installation</option>
+                <option>Microblading</option>
+                <option>Photography</option>
+                <option>Other / Package</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Preferred date, details..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Enquiry</button>
+            <p class="form-note">This form is currently a front-end placeholder. Connect to email or WhatsApp later.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <svg viewBox="0 0 40 40" class="brand-logo">
+          <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path d="M14 22 Q20 10 26 22" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="20" cy="19" r="2.5" fill="currentColor"/>
+        </svg>
+        <span>PinkGlaze</span>
+      </div>
+      <p>© <span id="year"></span> PinkGlaze Studio. All rights reserved. Abule Egba, Lagos.</p>
+    </div>
+  </footer>
+
+  <!-- Modal for portfolio item -->
+  <div class="modal" id="postModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-content">
+      <button class="modal-close" data-close aria-label="Close">&times;</button>
+      <img id="modalImg" src="" alt="" />
+      <div class="modal-body">
+        <h3 id="modalTitle"></h3>
+        <p id="modalCaption"></p>
+        <p class="modal-meta" id="modalMeta"></p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
