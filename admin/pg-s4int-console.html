@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Console</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --card: #141214;
+      --border: #2e2228;
+      --text: #f8e8ee;
+      --muted: #c9a8b5;
+      --accent: #e8a0b8;
+      --danger: #c45c5c;
+      --ok: #5a9e6f;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .gate {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1.5rem;
+    }
+    .gate-box {
+      width: min(360px, 100%);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+    .gate-box h1 {
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    input[type="password"],
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #0e0e0e;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font: inherit;
+      margin-bottom: 1rem;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #444;
+    }
+    button, .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.25rem;
+      font: inherit;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #0a0a0a;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover, .btn:hover {
+      background: transparent;
+      color: var(--accent);
+    }
+    /* Custom select */
+    .custom-select { position: relative; margin-bottom: 1rem; }
+    .custom-select-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: #0e0e0e;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+    .custom-select-trigger:hover,
+    .custom-select.open .custom-select-trigger { border-color: var(--accent); }
+    .custom-select-arrow { color: var(--accent); font-size: 0.75rem; transition: transform 0.2s; }
+    .custom-select.open .custom-select-arrow { transform: rotate(180deg); }
+    .custom-select-options {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: #141214;
+      border: 1px solid var(--border);
+      max-height: 220px;
+      overflow-y: auto;
+      z-index: 50;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    }
+    .custom-select-options[hidden] { display: none; }
+    .custom-select-options li {
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      list-style: none;
+    }
+    .custom-select-options li:last-child { border-bottom: none; }
+    .custom-select-options li:hover,
+    .custom-select-options li[aria-selected="true"] {
+      background: rgba(232,160,184,0.12);
+      color: var(--accent);
+    }
+    button.secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    button.danger {
+      background: transparent;
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+    button.danger:hover {
+      background: var(--danger);
+      color: #fff;
+    }
+    .error {
+      color: var(--danger);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .error.show { display: block; }
+
+    /* Dashboard */
+    .dash { display: none; }
+    .dash.visible { display: block; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+    .topbar h1 {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 0;
+      min-height: calc(100vh - 57px);
+    }
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+    .sidebar {
+      border-right: 1px solid var(--border);
+      padding: 1.5rem;
+      background: var(--card);
+    }
+    .main {
+      padding: 1.5rem;
+    }
+    .sidebar h2, .main h2 {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      font-weight: 500;
+    }
+    label {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .field { margin-bottom: 1rem; }
+    .preview {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: #0e0e0e;
+      border: 1px dashed var(--border);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .post-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+    .post-row {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 0.75rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+    .post-row img {
+      width: 64px;
+      height: 80px;
+      object-fit: cover;
+      background: #111;
+    }
+    .post-row h3 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+    .post-row p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .post-row .meta {
+      font-size: 0.7rem;
+      color: #666;
+      margin-top: 0.25rem;
+    }
+    .row-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .row-actions button {
+      padding: 0.4rem 0.7rem;
+      font-size: 0.7rem;
+    }
+    .status {
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      color: var(--muted);
+    }
+    .status.ok { color: var(--ok); }
+    .status.err { color: var(--danger); }
+    .empty {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 2rem 0;
+    }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <!-- Password Gate -->
+  <div class="gate" id="gate">
+    <div class="gate-box">
+      <h1>Access</h1>
+      <p class="error" id="gateError">Incorrect password</p>
+      <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password" />
+      <button type="button" id="unlockBtn" style="width:100%">Enter</button>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dash" id="dash">
+    <div class="topbar">
+      <h1>PinkGlaze Console</h1>
+      <button type="button" class="secondary" id="logoutBtn">Lock</button>
+    </div>
+    <div class="layout">
+      <aside class="sidebar">
+        <h2 id="formTitle">New Post</h2>
+        <form id="postForm">
+          <input type="hidden" id="editId" value="" />
+          <div class="field">
+            <label>Image</label>
+            <input type="file" id="imageFile" accept="image/*" />
+          </div>
+          <div class="preview" id="preview">
+            <span>Preview</span>
+          </div>
+          <div class="field">
+            <label>Title</label>
+            <input type="text" id="title" required placeholder="e.g. Bridal Soft Glam" />
+          </div>
+          <div class="field">
+            <label>Caption</label>
+            <textarea id="caption" rows="3" placeholder="Short description..."></textarea>
+          </div>
+          <div class="field">
+            <label>Category</label>
+            <div class="custom-select" id="categorySelect">
+              <button type="button" class="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="custom-select-value">Makeup</span>
+                <span class="custom-select-arrow">▾</span>
+              </button>
+              <ul class="custom-select-options" role="listbox" hidden>
+                <li role="option" data-value="Makeup" aria-selected="true">Makeup</li>
+                <li role="option" data-value="Bridal">Bridal</li>
+                <li role="option" data-value="Photoshoot">Photoshoot</li>
+                <li role="option" data-value="Hair">Hair</li>
+                <li role="option" data-value="Microblading">Microblading</li>
+                <li role="option" data-value="Other">Other</li>
+              </ul>
+              <input type="hidden" id="category" value="Makeup" />
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit" id="submitBtn">Publish</button>
+            <button type="button" class="secondary hidden" id="cancelEdit">Cancel</button>
+          </div>
+          <p class="status" id="formStatus"></p>
+        </form>
+      </aside>
+      <main class="main">
+        <h2>Published Posts</h2>
+        <div class="post-list" id="postList">
+          <p class="empty">Loading…</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module">
+    // ========== CONFIG (same placeholders as public site) ==========
+    const SUPABASE_URL = 'https://bhxyymcfyaqkcttviaxo.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_0c5uos8BpsDfydClLiKTuA_U39p7-F2';
+    const ADMIN_PASSWORD = 's4int-Pinkglaze';
+    const SESSION_KEY = 'pg_admin_ok';
+
+    // Session is intentionally short-lived and only in sessionStorage
+    // (clears when tab closes). Password is never stored.
+
+    let supabase = null;
+    let editingId = null;
+
+    // ---------- Auth gate ----------
+    const gate = document.getElementById('gate');
+    const dash = document.getElementById('dash');
+    const pwInput = document.getElementById('pwInput');
+    const unlockBtn = document.getElementById('unlockBtn');
+    const gateError = document.getElementById('gateError');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    function isAuthed() {
+      return sessionStorage.getItem(SESSION_KEY) === '1';
+    }
+
+    function lock() {
+      sessionStorage.removeItem(SESSION_KEY);
+      dash.classList.remove('visible');
+      gate.style.display = 'grid';
+      pwInput.value = '';
+      gateError.classList.remove('show');
+    }
+
+    function unlock() {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      gate.style.display = 'none';
+      dash.classList.add('visible');
+      initSupabase().then(loadPosts);
+    }
+
+    unlockBtn.addEventListener('click', tryUnlock);
+    pwInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') tryUnlock();
+    });
+    logoutBtn.addEventListener('click', lock);
+
+    function tryUnlock() {
+      // Constant-time-ish compare to reduce timing leaks (basic)
+      const entered = pwInput.value;
+      let match = entered.length === ADMIN_PASSWORD.length;
+      for (let i = 0; i < ADMIN_PASSWORD.length; i++) {
+        if (entered[i] !== ADMIN_PASSWORD[i]) match = false;
+      }
+      if (match) {
+        unlock();
+      } else {
+        gateError.classList.add('show');
+        pwInput.value = '';
+        pwInput.focus();
+      }
+    }
+
+    if (isAuthed()) {
+      unlock();
+    } else {
+      pwInput.focus();
+    }
+
+    // ---------- Supabase ----------
+    async function initSupabase() {
+      if (!SUPABASE_URL || SUPABASE_URL.includes('YOUR_SUPABASE')) {
+        setStatus('Supabase keys not set yet. Add them in this file and main.js.', 'err');
+        return null;
+      }
+      try {
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+        supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        return supabase;
+      } catch (e) {
+        setStatus('Failed to load Supabase SDK', 'err');
+        return null;
+      }
+    }
+
+    // ---------- Form / CRUD ----------
+    const postForm = document.getElementById('postForm');
+    const imageFile = document.getElementById('imageFile');
+    const preview = document.getElementById('preview');
+    const titleInput = document.getElementById('title');
+    const captionInput = document.getElementById('caption');
+    const categoryInput = document.getElementById('category');
+    const editIdInput = document.getElementById('editId');
+    const submitBtn = document.getElementById('submitBtn');
+    const cancelEdit = document.getElementById('cancelEdit');
+    const formTitle = document.getElementById('formTitle');
+    const formStatus = document.getElementById('formStatus');
+    const postList = document.getElementById('postList');
+    const categorySelectRoot = document.getElementById('categorySelect');
+    const categoryValueEl = categorySelectRoot?.querySelector('.custom-select-value');
+
+    // Custom pink/black category dropdown
+    (function initCategorySelect() {
+      if (!categorySelectRoot) return;
+      const trigger = categorySelectRoot.querySelector('.custom-select-trigger');
+      const options = categorySelectRoot.querySelector('.custom-select-options');
+      trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = categorySelectRoot.classList.toggle('open');
+        options.hidden = !open;
+        trigger.setAttribute('aria-expanded', open);
+      });
+      options.querySelectorAll('[role="option"]').forEach(opt => {
+        opt.addEventListener('click', () => {
+          const val = opt.dataset.value || 'Makeup';
+          categoryInput.value = val;
+          if (categoryValueEl) categoryValueEl.textContent = val;
+          options.querySelectorAll('[role="option"]').forEach(o => o.removeAttribute('aria-selected'));
+          opt.setAttribute('aria-selected', 'true');
+          categorySelectRoot.classList.remove('open');
+          options.hidden = true;
+          trigger.setAttribute('aria-expanded', 'false');
+        });
+      });
+      document.addEventListener('click', () => {
+        categorySelectRoot.classList.remove('open');
+        options.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+      });
+    })();
+
+    let selectedFile = null;
+
+    // Compress image before upload (max width 1600px, JPEG ~0.78 quality)
+    function compressImage(file, maxWidth = 1600, quality = 0.78) {
+      return new Promise((resolve, reject) => {
+        if (!file || !file.type.startsWith('image/')) {
+          resolve(file);
+          return;
+        }
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          let w = img.width;
+          let h = img.height;
+          if (w > maxWidth) {
+            h = Math.round((h * maxWidth) / w);
+            w = maxWidth;
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) {
+                resolve(file);
+                return;
+              }
+              const compressed = new File([blob], file.name.replace(/\.\w+$/, '.jpg'), {
+                type: 'image/jpeg',
+                lastModified: Date.now()
+              });
+              resolve(compressed);
+            },
+            'image/jpeg',
+            quality
+          );
+        };
+        img.onerror = () => {
+          URL.revokeObjectURL(url);
+          resolve(file);
+        };
+        img.src = url;
+      });
+    }
+
+    imageFile.addEventListener('change', async () => {
+      const file = imageFile.files[0];
+      if (!file) {
+        selectedFile = null;
+        preview.innerHTML = '<span>Preview</span>';
+        return;
+      }
+      setStatus('Compressing image…');
+      try {
+        selectedFile = await compressImage(file);
+        const sizeKb = Math.round(selectedFile.size / 1024);
+        const url = URL.createObjectURL(selectedFile);
+        preview.innerHTML = `<img src="${url}" alt="preview" /><p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem">${sizeKb} KB (compressed)</p>`;
+        setStatus('');
+      } catch (err) {
+        selectedFile = file;
+        preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="preview" />`;
+        setStatus('');
+      }
+    });
+
+    cancelEdit.addEventListener('click', resetForm);
+
+    function resetForm() {
+      editingId = null;
+      editIdInput.value = '';
+      postForm.reset();
+      selectedFile = null;
+      preview.innerHTML = '<span>Preview</span>';
+      categoryInput.value = 'Makeup';
+      if (categoryValueEl) categoryValueEl.textContent = 'Makeup';
+      formTitle.textContent = 'New Post';
+      submitBtn.textContent = 'Publish';
+      cancelEdit.classList.add('hidden');
+      setStatus('');
+    }
+
+    function setStatus(msg, type = '') {
+      formStatus.textContent = msg;
+      formStatus.className = 'status' + (type ? ' ' + type : '');
+    }
+
+    postForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!supabase) {
+        setStatus('Configure Supabase first.', 'err');
+        return;
+      }
+
+      const title = titleInput.value.trim();
+      const caption = captionInput.value.trim();
+      const category = categoryInput.value;
+
+      if (!title) {
+        setStatus('Title is required.', 'err');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      setStatus(editingId ? 'Updating…' : 'Uploading…');
+
+      try {
+        let image_url = null;
+
+        if (selectedFile) {
+          // Always store as jpg after compression
+          const path = `portfolio/${Date.now()}-${Math.random().toString(36).slice(2)}.jpg`;
+          const { error: upErr } = await supabase.storage
+            .from('portfolio')
+            .upload(path, selectedFile, {
+              cacheControl: '3600',
+              upsert: false,
+              contentType: 'image/jpeg'
+            });
+          if (upErr) throw upErr;
+
+          const { data: pub } = supabase.storage.from('portfolio').getPublicUrl(path);
+          image_url = pub.publicUrl;
+        }
+
+        if (editingId) {
+          const payload = { title, caption, category };
+          if (image_url) payload.image_url = image_url;
+          const { error } = await supabase.from('posts').update(payload).eq('id', editingId);
+          if (error) throw error;
+          setStatus('Updated.', 'ok');
+        } else {
+          if (!image_url) {
+            setStatus('Please select an image for a new post.', 'err');
+            submitBtn.disabled = false;
+            return;
+          }
+          const { error } = await supabase.from('posts').insert({
+            title,
+            caption,
+            category,
+            image_url
+          });
+          if (error) throw error;
+          setStatus('Published.', 'ok');
+        }
+
+        resetForm();
+        await loadPosts();
+      } catch (err) {
+        console.error(err);
+        setStatus(err.message || 'Something went wrong.', 'err');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+
+    async function loadPosts() {
+      if (!supabase) {
+        postList.innerHTML = '<p class="empty">Supabase not configured.</p>';
+        return;
+      }
+      const { data, error } = await supabase
+        .from('posts')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        postList.innerHTML = `<p class="empty">${error.message}</p>`;
+        return;
+      }
+
+      if (!data || !data.length) {
+        postList.innerHTML = '<p class="empty">No posts yet. Create the first one →</p>';
+        return;
+      }
+
+      postList.innerHTML = data.map(p => `
+        <div class="post-row" data-id="${p.id}">
+          <img src="${p.image_url || ''}" alt="" />
+          <div>
+            <h3>${escapeHtml(p.title || 'Untitled')}</h3>
+            <p>${escapeHtml((p.caption || '').slice(0, 80))}</p>
+            <div class="meta">${escapeHtml(p.category || '')} · ${formatDate(p.created_at)}</div>
+          </div>
+          <div class="row-actions">
+            <button type="button" class="secondary edit-btn" data-id="${p.id}">Edit</button>
+            <button type="button" class="danger del-btn" data-id="${p.id}">Delete</button>
+          </div>
+        </div>
+      `).join('');
+
+      postList.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => startEdit(data.find(x => x.id === btn.dataset.id)));
+      });
+      postList.querySelectorAll('.del-btn').forEach(btn => {
+        btn.addEventListener('click', () => deletePost(btn.dataset.id));
+      });
+    }
+
+    function startEdit(post) {
+      if (!post) return;
+      editingId = post.id;
+      editIdInput.value = post.id;
+      titleInput.value = post.title || '';
+      captionInput.value = post.caption || '';
+      const cat = post.category || 'Makeup';
+      categoryInput.value = cat;
+      if (categoryValueEl) categoryValueEl.textContent = cat;
+      selectedFile = null;
+      imageFile.value = '';
+      if (post.image_url) {
+        preview.innerHTML = `<img src="${post.image_url}" alt="current" />`;
+      } else {
+        preview.innerHTML = '<span>Preview</span>';
+      }
+      formTitle.textContent = 'Edit Post';
+      submitBtn.textContent = 'Update';
+      cancelEdit.classList.remove('hidden');
+      setStatus('Editing existing post. Leave image empty to keep current.');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function deletePost(id) {
+      if (!confirm('Delete this post permanently?')) return;
+      if (!supabase) return;
+      const { error } = await supabase.from('posts').delete().eq('id', id);
+      if (error) {
+        alert(error.message);
+        return;
+      }
+      await loadPosts();
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '';
+      return new Date(iso).toLocaleDateString('en-NG', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>
